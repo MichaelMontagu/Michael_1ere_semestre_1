@@ -1,20 +1,35 @@
 import random
-alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J","K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+import sys
+alphabet = ["A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "C", "C", "D", "D", "D", "D", 
+"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "F", "F", "G", "G", "G", "H", "H", 
+"I", "I", "I", "I", "I", "I", "I", "I", "I", "J","K", "L", "L", "L", "L", "M", "M", "N", "N", "N", "N", "N", "N", 
+"O", "O", "O", "O", "O", "O", "O", "O", "P", "P", "Q", "R", "R", "R", "R", "R", "R", "S", "S", "S", "S", 
+"T", "T", "T", "T", "T", "T", "U", "U", "U", "U", "V", "V", "W", "W", "X", "Y", "Y", "Z"]
 sevenL = []
 for i in range(7):
-    i = random.randint(0, 25)
-    sevenL.append(alphabet[i])
-print(sevenL)
-sevenL = ["T", "O", "X", "I", "Q", "U", "E"]
-with open("dico_nfa031.txt", "r") as file:
-    for line in file:
-        word = line.strip()  
-        if len(word) != 7:   
-            continue
-        available_letters = sevenL.copy()
-        for letter in sevenL:
-            if letter not in word:
-                continue
-            else:
-                print(word)    
+    x = random.randint(0, len(alphabet) - 1 )
+    sevenL.append(alphabet[x])
+    alphabet.remove(alphabet[x])
 
+def wordall(word, letters):
+    safety = letters.copy()
+    for letter in word:
+        if letter in safety:
+            safety.remove(letter) 
+        else:
+            return False
+    return True
+
+
+print(sevenL)
+sevenL = ["C", "Y", "T", "L", "B", "R", "T"]
+with open("dico_nfa031.txt") as f: sorted_words = sorted(f.read().split(), key=len, reverse=True)
+for line in sorted_words:
+    words = line.split()
+    for length in range(7, 0, -1):
+        for word in words:
+            if len(word) == length and wordall(word, sevenL):
+                print(word)
+                sys.exit()
+            
+print("There are no possible words")
