@@ -22,14 +22,13 @@ def wordall(word, letters):
 
 
 print(sevenL)
-sevenL = ["C", "Y", "T", "L", "B", "R", "T"]
-with open("dico_nfa031.txt") as f: sorted_words = sorted(f.read().split(), key=len, reverse=True)
-for line in sorted_words:
-    words = line.split()
-    for length in range(7, 0, -1):
-        for word in words:
-            if len(word) == length and wordall(word, sevenL):
-                print(word)
-                sys.exit()
-            
-print("There are no possible words")
+def findword():
+    with open("dico_nfa031.txt") as f: sorted_words = sorted(f.read().split(), key=len, reverse=True)
+    for line in sorted_words:
+        words = line.split()
+        for length in range(7, 0, -1):
+            for word in words:
+                if len(word) == length and wordall(word, sevenL):
+                    return word           
+    return "There are no possible words"
+print (findword())
